@@ -98,8 +98,8 @@ function resizeElements() {
     if ($(window).outerWidth() < panelHeight) {
        timerDiameter = $(window).outerWidth();
     }
-
-    var timerDiameter = timerDiameter * 0.8; 
+    
+    var timerDiameter = timerDiameter * 0.6; 
  
    $("#dialContainer").css("height",panelHeight + "px");
     $("#dialBorder").css("height", timerDiameter + "px");
