@@ -85,16 +85,31 @@ var customTime = new Time(0,5);
 
 
 function resizeElements() {
-    var height = $("#timerPanel").outerHeight(true);
-    var width = $("#timerPanel").outerWidth(true);
+    // height of header and footer
+    var headerHeight = $("header").outerHeight(true) + $("footer").outerHeight(true);
     
-    var timerDiameter = Math.round(Math.min(height, width)*0.8); 
-   
-   
+    // if on mobile, add height of restart panel to header and footer heights
+    if (($("#timerControllerPanel").css("position") !== "absolute")) {
+        headerHeight += $("#timerControllerPanel").outerHeight(true);
+    }
+    var panelHeight = $(window).outerHeight() - headerHeight;
+    var timerDiameter = panelHeight;    
+    
+    if ($(window).outerWidth() < panelHeight) {
+       timerDiameter = $(window).outerWidth();
+    }
+
+    var timerDiameter = timerDiameter * 0.8; 
+ 
+   $("#dialContainer").css("height",panelHeight + "px");
     $("#dialBorder").css("height", timerDiameter + "px");
     $("#dialBorder").css("width", timerDiameter + "px");
     
 }
+//call function when page first loads
 resizeElements();
+$(window).resize(function() {
+   resizeElements(); 
+});
     
 });

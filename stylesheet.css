@@ -26,6 +26,9 @@ header {
     height: calc(100vh - 2.4em);
 }
 #dialContainer {
+    box-sizing: border-box;
+    -mox-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     display: flex;
     display: -webkit-flex;
     justify-content: center;
@@ -33,7 +36,6 @@ header {
     align-items: center;
     -webkit-align-items: center;
     width: 100%;
-    /*height: calc(100vh - 6.4em);*/
     height: 100%;
     margin: auto;
     text-align: center;
@@ -43,11 +45,12 @@ header {
  font-size: 2em;   
 }
 #dialBorder {
-
- 
+    box-sizing: border-box;
+    -mox-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 10em;
     height: 10em;
-    padding: 1px;
+    padding: 2px;
     border-radius: 100%;
     /*background-color: blue;*/
     border: 2px solid #49a154;
