@@ -16,8 +16,21 @@
             <h1>POMODORO</h1>
         </header>
 
-        <div id="setTimerPanel"></div>
-        <div id="timerPanel">
+        <div id="setTimerPanel"class="panel">
+            <p>WORK<br>TIME</p>
+            <div class="setTime">
+                <p><a href="#" id="workUp"><i class="fa fa-chevron-up" aria-hidden="true"></i></a></p>
+                <p id="workLength">25</p>
+                <p><a href="#" id="workDown"><i class="fa fa-chevron-down" aria-hidden="true"></i></a></p>
+            </div>
+            <div class="setTime">
+                <a href="#" id="breakUp"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+                <p id="breakLength">5</p>
+                <a href="#" id="breakDown"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            </div> 
+            <p>BREAK<br>TIME</p>           
+        </div> <!--setTimePanel-->
+        <div id="timerPanel" class="panel">
             <div id="timerControllerPanel">
                 <ul>
                     <li><a href="#" id="pauseButton"><i class="fa fa-pause"></i> PAUSE</a></li>
@@ -25,13 +38,13 @@
                 </ul>
             </div> <!--timerControllerPanel-->
             
-            <div id="dialContainer">
+            <div id="dialContainer" class="panel">
                                     
                 <div id="dialBorder">
                     <div id="container"></div>
                 </div>
             </div>
-        </div>
+        </div> <!--end of timerControllerPanel-->
         <div id="timerEndsPanel"></div>
         <footer>
             <p>created by AmaranthNebula</p>

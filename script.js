@@ -48,8 +48,9 @@ $(document).ready(function() {
         }
 } // end of Time function name(params) 
 
+//TODO NOTE
 //this should be moved to start pomodoro event handle
-activateTimerPanel(1,0);    
+// activateTimerPanel(1,0);    
     
 function activateTimerPanel(min, sec) {    
     // display timerPanel

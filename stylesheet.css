@@ -18,8 +18,41 @@ header > h1 {
 header {
         height: 2.3em;
 }
-
-#timerPanel {
+#setTimerPanel {
+    font-size: 2em;
+    margin: auto;
+    width: 80%;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    text-align: center;
+}
+#setTimerPanel > p {
+    padding: 1em 0.5em;
+ 
+}
+.setTime {
+    padding: 1em 0.5em;
+}
+.setTime > p > a {
+    text-decoration: none;
+    color: #49a154;
+}
+.setTime > p > a:hover {
+    color: #7ace88; 
+}
+.setTime > a:visited {
+    color: #49a154;
+}
+.setTime > a:visited:hover {
+        color: #7ace88; 
+}
+.panel {
     display:none;
     text-align: center;
     background-color: #fdf9f8;
