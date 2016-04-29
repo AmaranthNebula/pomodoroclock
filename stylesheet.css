@@ -64,17 +64,19 @@ header {
     -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
     transform: rotate(90deg);
 }
-#setTimerPanel > a {
+.button {
     text-decoration: none;
     display: inline-block;
     padding: 0.3em;
     background-color: #49a154;
     color: #fdf9f8;
     border-radius: 0.5em;
-    margin-top: 1em;   
 }
-#setTimerPanel > a:hover {
-    background-color: #7ace88;
+.button:hover {
+     background-color: #7ace88;
+}
+#setTimerPanel > a {
+    margin-top: 1em;   
 }
 
 #dialContainer {
@@ -135,6 +137,23 @@ footer {
     bottom: 0.5em;
     text-align: center;
 }
+#timerEndsPanel {
+    background-color: rgba(253,249,248,0.93);
+    display: block;
+    position: absolute;
+    top: 2.2em;
+    left: 0;
+    font-size: 1.3em;
+}
+
+#pomodoroResult {
+    padding-bottom: 1em;
+}
+#timerEndsPanel > div > a {
+    margin: 0.5em;
+}
+
+
 
 @media all and (min-width: 600px) {
     header > h1 {

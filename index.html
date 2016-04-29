@@ -32,15 +32,15 @@
                 <p>BREAK TIME</p>  
             </div>
  
-            <a href="#"  id ="startButton">START POMODORO</a>     
-        </div> <!--setTimePanel-->
+            <a href="#"  id ="startButton" class="button">START POMODORO</a>     
+        </div> <!--end of setTimePanel-->
         <div id="timerPanel" class="panel">
             <div id="timerControllerPanel">
                 <ul>
                     <li><a href="#" id="pauseButton"><i class="fa fa-pause"></i> PAUSE</a></li>
                     <li><a href="#" id="restartButton"><i class="fa fa-repeat"></i> RESTART</a></li>
                 </ul>
-            </div> <!--timerControllerPanel-->
+            </div> <!-- end of timerControllerPanel-->
             
             <div id="dialContainer" class="panel">
                                     
@@ -49,7 +49,13 @@
                 </div>
             </div>
         </div> <!--end of timerControllerPanel-->
-        <div id="timerEndsPanel"></div>
+        <div id="timerEndsPanel" class="panel">
+            <div>
+                <h2 id="pomodoroResult">POMODORO 1 COMPLETE!!</h2>
+                <a href="#" id="takeBreak" class="button">TAKE BREAK</a>
+                <a href="#" id="keepWorking" class="button">KEEP WORKING</a>
+            </div>
+        </div> <!--end of timerEndsPanel -->
         <footer>
             <p>created by AmaranthNebula</p>
         </footer>

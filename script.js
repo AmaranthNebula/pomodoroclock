@@ -239,6 +239,18 @@ function resizeElements() {
     $("#dialBorder").css("height", timerDiameter + "px");
     $("#dialBorder").css("width", timerDiameter + "px");
     
+    //if the timerup panel is visible
+   // if ($("#timerEndsPanel").css("display") !== "none") {
+        
+        var timerUpPanelHeight = $("#timerEndsPanel").outerHeight(true);
+        var resultsHeight = $("#timerEndsPanel > div").outerHeight(true);
+        var paddingNeeded = (timerUpPanelHeight - resultsHeight)/2;
+        
+        //apply padding to div containing results
+        $("#timerEndsPanel > div").css("padding-top", paddingNeeded + "px");
+        
+    //}
+    
 }
 //call function when page first loads
 resizeElements();
