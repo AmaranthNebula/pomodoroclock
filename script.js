@@ -4,6 +4,7 @@ $(document).ready(function() {
         var minutes = m;
         var seconds = s;  
         var milliseconds = ((minutes*60) + seconds) * 1000;
+        var originalTime = milliseconds;
         this.getTime = function() {
             var current = "";
             if (minutes < 10) {
@@ -17,13 +18,6 @@ $(document).ready(function() {
             return current;
         }
         function convertFromMS() {
-
-            
-            
-        }
-        
-        this.decrement = function() {
-            milliseconds -= 1000;
             var current = Math.round(milliseconds/1000);
             if (current >= 60) {
                 minutes = Math.floor(current/60);
@@ -31,15 +25,11 @@ $(document).ready(function() {
             } else {
                 minutes = 0;
                 seconds = current;
-            }            
-            // convertFromMS();
-            // if (seconds < 0 && minutes > 0) {
-            //     minutes -= 1;
-            //     seconds = 59;
-            // } else if (minutes < 0 || seconds < 0){
-            //     minutes = 0;
-            //     seconds = 0;
-            // }
+            }  
+        }
+        this.decrement = function() {
+            milliseconds -= 1000;
+            convertFromMS();          
         }
         this.setTime = function(m, s) {
             minutes = m;
@@ -48,8 +38,30 @@ $(document).ready(function() {
         this.getMilliseconds = function() {
             return milliseconds;
         }
-}
-var customTime = new Time(0,5);
+        //returns percent in decimal form
+        this.getPercent = function() {
+            return 1 - (milliseconds / originalTime);
+        }
+        this.resetClock = function() {
+            milliseconds = originalTime;
+            convertFromMS();
+        }
+} // end of Time function name(params) 
+
+//this should be moved to start pomodoro event handle
+activateTimerPanel(1,0);    
+    
+function activateTimerPanel(min, sec) {    
+    // display timerPanel
+    $("#timerPanel").css("display", "block");
+    
+    
+    //this variable holds the time set in the setTimer Panel
+    // default time is set to 5 minutes
+    var customTime = new Time(min,sec);
+    
+    
+    
     var activeTimer = new ProgressBar.Circle(container, {
         strokeWidth: 3,
         easing: 'easeInOut',
@@ -61,13 +73,10 @@ var customTime = new Time(0,5);
         svgStyle: null
     });
     
-    
-    activeTimer.animate(1.0);
-
     function displayCountDown() {
         customTime.decrement();
         activeTimer.setText(customTime.getTime());
-        
+        activeTimer.set(customTime.getPercent());
         if (customTime.getTime() === "00:00") {
             end();
         }
@@ -75,14 +84,67 @@ var customTime = new Time(0,5);
     }; 
         var timer = setInterval(function() {
             displayCountDown();
-        },900);
+        },1000);
 
     function end () {
         console.log("called");
         clearInterval(timer);
         timer =0;
+        // TODO NOTE
+        // call function/panel to show results of pomodoro
     }  
 
+    //
+    // button handlers
+    //
+    var paused = false;
+    $("#pauseButton").click(function(e) {
+        e.preventDefault();
+        var pause = "<i class='fa fa-pause'></i> PAUSE</a>";
+        var play = "<i class='fa fa-play'></i> CONTINUE</a>";
+        
+        if(paused) {
+            //restart counter
+            timer = setInterval(function() {
+                displayCountDown();
+            },1000);
+            paused = false;
+            $("#pauseButton").html(pause);
+        }
+        // if not currently paused
+        else {
+            clearInterval(timer);
+            paused = true;
+            $("#pauseButton").html(play);
+        }
+        
+    });
+    
+    $("#restartButton").click(function(e) {
+    e.preventDefault();
+    //stop prev counter
+    clearInterval(timer);
+    //reset time back to original and update display
+    customTime.resetClock();
+    activeTimer.setText(customTime.getTime());
+    activeTimer.set(customTime.getPercent());
+    //reset pause data
+    paused = false;
+    $("#pauseButton").html("<i class='fa fa-pause'></i> PAUSE</a>");
+    
+    
+    //restart counter
+    timer = setInterval(function() {
+            displayCountDown();
+        },1000);
+
+    });
+
+}; // end of activateTimer Panel
+
+//
+// RESIZE EVENT HANDLERS
+//
 
 function resizeElements() {
     // height of header and footer

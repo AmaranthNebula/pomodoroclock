@@ -20,6 +20,7 @@ header {
 }
 
 #timerPanel {
+    display:none;
     text-align: center;
     background-color: #fdf9f8;
     width: 100%;
@@ -58,6 +59,11 @@ header {
 #timerControllerPanel > ul {
     list-style-type: none;
     text-align: center;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    justify-content: space-between;    
 }
 #timerControllerPanel > ul > li {
     display: inline-block;
