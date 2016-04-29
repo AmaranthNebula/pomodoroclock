@@ -47,6 +47,77 @@ $(document).ready(function() {
             convertFromMS();
         }
 } // end of Time function name(params) 
+setUpTimer();
+function setUpTimer() {
+    
+    $("#workUp").click(function(e) {
+       e.preventDefault();
+       var workTime = parseInt($("#workLength").text());
+        
+        if (workTime >= 60) {
+            workTime = 1;
+        }else {
+            workTime++;
+        }
+        
+        $("#workLength").html(workTime);
+    });
+    
+    $("#workDown").click(function(e) {
+       e.preventDefault();
+       var workTime = parseInt($("#workLength").text());
+        
+        if (workTime <= 1) {
+            workTime = 60;
+        }else {
+            workTime--;
+        }
+        
+        $("#workLength").html(workTime);       
+    });
+    $("#breakUp").click(function(e) {
+       e.preventDefault();
+       var breakTime = parseInt($("#breakLength").text());
+        
+        if (breakTime >= 60) {
+            breakTime = 1;
+        }else {
+            breakTime++;
+        }
+        
+        $("#breakLength").html(breakTime);
+    });
+    
+    $("#breakDown").click(function(e) {
+       e.preventDefault();
+       var breakTime = parseInt($("#breakLength").text());
+        
+        if (breakTime <= 1) {
+            breakTime = 60;
+        }else {
+            breakTime--;
+        }
+        
+        $("#breakLength").html(breakTime);       
+    });    
+
+    $("#startButton").click(function(e) {
+       e.preventDefault();
+       //get values selectd for pomodoro
+       var workTime = parseInt($("#workLength").text());
+       //hide panel
+       $("#setTimerPanel").css("display", "none");
+       
+       //show timer panel
+       $("#timerPanel").css("display", "block");
+       
+       //call timer function
+       activateTimerPanel(workTime, 0);
+       
+    });
+    
+}
+
 
 //TODO NOTE
 //this should be moved to start pomodoro event handle
