@@ -17,18 +17,22 @@
         </header>
 
         <div id="setTimerPanel"class="panel">
-            <p>WORK<br>TIME</p>
-            <div class="setTime">
-                <p><a href="#" id="workUp"><i class="fa fa-chevron-up" aria-hidden="true"></i></a></p>
-                <p id="workLength">25</p>
-                <p><a href="#" id="workDown"><i class="fa fa-chevron-down" aria-hidden="true"></i></a></p>
+            <div>
+                <p>WORK TIME</p>
+                <div class="setTime">
+                    <p><a href="#" id="workUp"><i class="fa fa-chevron-up leftArrow" aria-hidden="true"></i></a></p>
+                    <p id="workLength">25</p>
+                    <p><a href="#" id="workDown"><i class="fa fa-chevron-down leftArrow" aria-hidden="true"></i></a></p>
+                </div>
+                <div class="setTime">
+                    <a href="#" id="breakUp"><i class="fa fa-chevron-up leftArrow" aria-hidden="true"></i></a>
+                    <p id="breakLength">5</p>
+                    <a href="#" id="breakDown"><i class="fa fa-chevron-down leftArrow" aria-hidden="true"></i></a>
+                </div> 
+                <p>BREAK TIME</p>  
             </div>
-            <div class="setTime">
-                <a href="#" id="breakUp"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
-                <p id="breakLength">5</p>
-                <a href="#" id="breakDown"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-            </div> 
-            <p>BREAK<br>TIME</p>           
+ 
+            <a href="#"  id ="startButton">START POMODORO</a>     
         </div> <!--setTimePanel-->
         <div id="timerPanel" class="panel">
             <div id="timerControllerPanel">
