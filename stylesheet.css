@@ -48,17 +48,17 @@ header {
 .setTime P {
     display: inline-block;
 }
-.setTime > p > a {
+.setTime a {
     text-decoration: none;
     color: #49a154;
 }
-.setTime > p > a:hover {
+.setTime a:hover {
     color: #7ace88; 
 }
-.setTime > a:visited {
+.setTime a:visited {
     color: #49a154;
 }
-.setTime > a:visited:hover {
+.setTime a:visited:hover {
     color: #7ace88; 
 }
 .leftArrow {
