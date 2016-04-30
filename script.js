@@ -117,9 +117,8 @@ var customTime = new Time(0,5);
        workMinutes = parseInt($("#workLength").text());
        breakMinutes = parseInt($("#breakLength").text());
 
-       //TODO SWITCH BACK TO MINUTES
        //call timer function
-       activateTimerPanel(0, workMinutes);
+       activateTimerPanel(workMinutes, 0);
        
     });
     
@@ -251,18 +250,31 @@ function timesUP() {
         $("#pomodoroResult").html("POMODORO " + pomodorosCompleted + " COMPLETE!!");
     }
     
-    // TODO call sound alarm function
+    // call sound alarm function
+    controlSound(true);
+}
+//control playback of alarm sound
+// if true: play alarm
+// if false: stop alarm
+function controlSound(play) {
+    var audioObject = document.getElementsByTagName("audio")[0];
+    if (play) {
+        audioObject.play();
+    } else {
+        audioObject.pause();
+    }
+    
+    
+    
 }
     
     //button handlers
     $("#takeBreakButton").click(function(e) {
        e.preventDefault();
-       //TODO stop alarm sound 
-       
+       //stop alarm sound 
+       controlSound(false);
        // hide times up panel //reveal timerPanel behind times up panel
        $("#timerEndsPanel").css("display", "none");
-      //call method to start timer
-      //TODO SWTICH
       
       // if a multiple of four pomodoros have been completed 
       // break timer is 3 times longer
@@ -276,13 +288,12 @@ function timesUP() {
     });
     $("#keepWorkingButton").click(function(e) {
        e.preventDefault();
-       // TODO stop alarm sound
-       
+       //stop alarm sound
+       controlSound(false);
         // hide times up panel //reveal timerPanel behind times up panel
        $("#timerEndsPanel").css("display", "none");
       //call method to start timer
-      //TODO SWITCH
-      activateTimerPanel(0, workMinutes);
+      activateTimerPanel(workMinutes, 0);
              
         takingBreak = false;
     });
