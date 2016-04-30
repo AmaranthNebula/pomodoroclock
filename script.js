@@ -149,10 +149,10 @@ function activateTimerPanel(min, sec) {
     activeTimer.setText(customTime.getTime());
     activeTimer.set(customTime.getPercent());     
     //hide panels
-    $("#setTimerPanel").css("display", "none");
-    $("#timerEndsPanel").css("display", "none");    
+    $("#setTimerPanel").hide();
+    $("#timerEndsPanel").hide();    
     //show countdown timer panel
-    $("#timerPanel").css("display", "block");    
+    $("#timerPanel").show();    
 
     controlTimer(true);
 }
@@ -274,7 +274,7 @@ function controlSound(play) {
        //stop alarm sound 
        controlSound(false);
        // hide times up panel //reveal timerPanel behind times up panel
-       $("#timerEndsPanel").css("display", "none");
+       $("#timerEndsPanel").hide();
       
       // if a multiple of four pomodoros have been completed 
       // break timer is 3 times longer
@@ -291,7 +291,8 @@ function controlSound(play) {
        //stop alarm sound
        controlSound(false);
         // hide times up panel //reveal timerPanel behind times up panel
-       $("#timerEndsPanel").css("display", "none");
+ 
+       $("#timerEndsPanel").hide();
       //call method to start timer
       activateTimerPanel(workMinutes, 0);
              
@@ -301,9 +302,36 @@ function controlSound(play) {
     //when quit button is clicked reload the window to clear all settings
     $("#quitButton").click(function(e) {
        e.preventDefault();
-       location.reload(); 
+       returnToHome(); 
     });
+function returnToHome() {
+    //stop timer
+    controlTimer(false);
+    //stop sound
+    controlSound(false);
     
+    //hide panels
+    $("#timerPanel").hide();
+    $("#timerEndsPanel").hide();
+    
+    //view set timer panel
+    $("#setTimerPanel").show();
+    //reset pomodoro counter and other values
+    pomodorosCompleted = 0;
+    paused = false;
+    takingBreak = false;
+    resizeElements();
+}    
+
+//
+// LOGO button reload page
+//
+$("header > h1").click(function(e) {
+   e.preventDefault();
+//    location.reload(); 
+    returnToHome();
+
+});
 
 
 //
