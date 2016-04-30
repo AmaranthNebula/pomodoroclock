@@ -59,28 +59,45 @@ var customTime = new Time(0,5);
 //setup Timer
     //arrow buttons event handlers to select work and break times
     //max values 60 and min value 1
+    function increaseValue(num) {
+        if (num >= 60) {
+            num = 1;
+        }else {
+            num++;
+        }
+        return num;
+    }
+    function decreaseValue(num) {
+        if (num <= 1) {
+            num = 60;
+        }else {
+            num--;
+        }
+        return num;       
+    }
     $("#workUp").click(function(e) {
        e.preventDefault();
        var workTime = parseInt($("#workLength").text());
-        
-        if (workTime >= 60) {
-            workTime = 1;
+        //if not on mobile
+        if ($("#setTimerPanel").css("display") !== "block") {
+            workTime = increaseValue(workTime);
         }else {
-            workTime++;
+            workTime = decreaseValue(workTime);
         }
-        
+       
         $("#workLength").html(workTime);
     });
     
     $("#workDown").click(function(e) {
        e.preventDefault();
        var workTime = parseInt($("#workLength").text());
-        
-        if (workTime <= 1) {
-            workTime = 60;
+        //if not on mobile
+        if ($("#setTimerPanel").css("display") !== "block") {
+            workTime = decreaseValue(workTime);
         }else {
-            workTime--;
+            workTime = increaseValue(workTime);
         }
+
         
         $("#workLength").html(workTime);       
     });
@@ -88,10 +105,11 @@ var customTime = new Time(0,5);
        e.preventDefault();
        var breakTime = parseInt($("#breakLength").text());
         
-        if (breakTime >= 60) {
-            breakTime = 1;
+        //if not on mobile        
+        if ($("#setTimerPanel").css("display") !== "block") {
+            breakTime = increaseValue(breakTime);
         }else {
-            breakTime++;
+            breakTime = decreaseValue(breakTime);
         }
         
         $("#breakLength").html(breakTime);
@@ -101,10 +119,11 @@ var customTime = new Time(0,5);
        e.preventDefault();
        var breakTime = parseInt($("#breakLength").text());
         
-        if (breakTime <= 1) {
-            breakTime = 60;
+        //if not on mobile
+        if ($("#setTimerPanel").css("display") !== "block") {
+            breakTime = decreaseValue(breakTime);
         }else {
-            breakTime--;
+            breakTime = increaseValue(breakTime);
         }
         
         $("#breakLength").html(breakTime);       
