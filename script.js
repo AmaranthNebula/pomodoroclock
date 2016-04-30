@@ -47,9 +47,18 @@ $(document).ready(function() {
             convertFromMS();
         }
 } // end of Time function name(params) 
-setUpTimer();
-function setUpTimer() {
-    
+//says how many pomodoros have been completed
+var pomodorosCompleted = 0;
+var workMinutes;
+var breakMinutes;
+var takingBreak = false;
+//variable to hold time; default time: 5 seconds
+var customTime = new Time(0,5);
+
+
+//setup Timer
+    //arrow buttons event handlers to select work and break times
+    //max values 60 and min value 1
     $("#workUp").click(function(e) {
        e.preventDefault();
        var workTime = parseInt($("#workLength").text());
@@ -101,101 +110,116 @@ function setUpTimer() {
         $("#breakLength").html(breakTime);       
     });    
 
+    //start POMODORO
     $("#startButton").click(function(e) {
        e.preventDefault();
        //get values selectd for pomodoro
-       var workTime = parseInt($("#workLength").text());
-       //hide panel
-       $("#setTimerPanel").css("display", "none");
-       
-       //show timer panel
-       $("#timerPanel").css("display", "block");
-       
+       workMinutes = parseInt($("#workLength").text());
+       breakMinutes = parseInt($("#breakLength").text());
+
+       //TODO SWITCH BACK TO MINUTES
        //call timer function
-       activateTimerPanel(workTime, 0);
+       activateTimerPanel(0, workMinutes);
        
     });
     
-}
+//end of setup TIMER
+//
+//
+//
+// start of start timer
 
-
-//TODO NOTE
-//this should be moved to start pomodoro event handle
-// activateTimerPanel(1,0);    
-    
-function activateTimerPanel(min, sec) {    
-    // display timerPanel
-    $("#timerPanel").css("display", "block");
-    
-    
-    //this variable holds the time set in the setTimer Panel
-    // default time is set to 5 minutes
-    var customTime = new Time(min,sec);
-    
-    
-    
+//create timer object
+// the timer function will edit this object dynamically
     var activeTimer = new ProgressBar.Circle(container, {
         strokeWidth: 3,
         easing: 'easeInOut',
-        duration: customTime.getMilliseconds(),
+        duration: 1,
         color: '#49a154',
         text: {
-            value: customTime.getTime()
+            value: "00:00"
         },
         svgStyle: null
     });
-    
-    function displayCountDown() {
-        customTime.decrement();
-        activeTimer.setText(customTime.getTime());
-        activeTimer.set(customTime.getPercent());
-        if (customTime.getTime() === "00:00") {
-            end();
-        }
-        
-    }; 
-        var timer = setInterval(function() {
-            displayCountDown();
-        },1000);
 
-    function end () {
-        console.log("called");
+function activateTimerPanel(min, sec) {
+    if (min !== undefined || sec !== undefined) {
+        customTime = new Time(min, sec);
+    }
+    //update Timer object display
+    activeTimer.setText(customTime.getTime());
+    activeTimer.set(customTime.getPercent());     
+    //hide panels
+    $("#setTimerPanel").css("display", "none");
+    $("#timerEndsPanel").css("display", "none");    
+    //show countdown timer panel
+    $("#timerPanel").css("display", "block");    
+
+    controlTimer(true);
+}
+function displayCountDown() {
+    customTime.decrement();
+    activeTimer.setText(customTime.getTime());
+    activeTimer.set(customTime.getPercent());
+    if (customTime.getTime() === "00:00") {
+        end();
+    }
+    
+}
+// after timer reaches zero
+// show results panel and if not on a break add one to pomodoro total 
+function end () {
+    controlTimer(false);
+    if (!takingBreak) {
+        pomodorosCompleted++;
+    }
+    // call function and show panel to show results of pomodoro
+    $("#timerEndsPanel").css("display" ,"flex");
+    $("#timerEndsPanel").css("display" ,"-webkit-flex");
+    timesUP();
+
+}  
+//this functions starts and stops the timer
+// true = start timer
+// false = stop timer
+var timer;
+function controlTimer(start) {
+    if (start) {
+       timer = setInterval(function() {
+            displayCountDown();
+        },1000);    
+    }
+    else {
         clearInterval(timer);
         timer =0;
-        // TODO NOTE
-        // call function/panel to show results of pomodoro
-    }  
-
-    //
-    // button handlers
-    //
-    var paused = false;
-    $("#pauseButton").click(function(e) {
-        e.preventDefault();
-        var pause = "<i class='fa fa-pause'></i> PAUSE</a>";
-        var play = "<i class='fa fa-play'></i> CONTINUE</a>";
-        
-        if(paused) {
-            //restart counter
-            timer = setInterval(function() {
-                displayCountDown();
-            },1000);
-            paused = false;
-            $("#pauseButton").html(pause);
-        }
-        // if not currently paused
-        else {
-            clearInterval(timer);
-            paused = true;
-            $("#pauseButton").html(play);
-        }
-        
-    });
+    }
     
-    $("#restartButton").click(function(e) {
+}
+
+var paused = false;
+$("#pauseButton").click(function(e) {
     e.preventDefault();
-    //stop prev counter
-    clearInterval(timer);
+    var pause = "<i class='fa fa-pause'></i> PAUSE</a>";
+    var play = "<i class='fa fa-play'></i> CONTINUE</a>";
+    
+    if(paused) {
+        controlTimer(true);
+        paused = false;
+        $("#pauseButton").html(pause);
+    }
+    // if not currently paused
+    else {
+        controlTimer(false);
+        paused = true;
+        $("#pauseButton").html(play);
+    }
+    
+});
+
+$("#restartButton").click(function(e) {
+    e.preventDefault();
+    //stop timer
+    controlTimer(false);
     //reset time back to original and update display
     customTime.resetClock();
     activeTimer.setText(customTime.getTime());
@@ -204,15 +228,72 @@ function activateTimerPanel(min, sec) {
     paused = false;
     $("#pauseButton").html("<i class='fa fa-pause'></i> PAUSE</a>");
     
+    controlTimer(true);
+});
+
+//
+// end of start timer actions
+// 
+//
+// start of times up actions
+
+function timesUP() {
+    // setup info displayed
+    // offer longer break every four pomodoros
+    if (takingBreak) {
+        $("#pomodoroResult").html("BREAK IS NOW OVER: GET BACK TO WORK");
+    }
+    else if(pomodorosCompleted % 4 === 0) {
+        $("#pomodoroResult").html("POMODORO " + pomodorosCompleted + " COMPLETE!!"
+                    + "<p>GOOD WORK! YOU CAN NOW TAKE A LONGER BREAK!</P>");
+    }
+    else {
+        $("#pomodoroResult").html("POMODORO " + pomodorosCompleted + " COMPLETE!!");
+    }
     
-    //restart counter
-    timer = setInterval(function() {
-            displayCountDown();
-        },1000);
-
+    // TODO call sound alarm function
+}
+    
+    //button handlers
+    $("#takeBreakButton").click(function(e) {
+       e.preventDefault();
+       //TODO stop alarm sound 
+       
+       // hide times up panel //reveal timerPanel behind times up panel
+       $("#timerEndsPanel").css("display", "none");
+      //call method to start timer
+      //TODO SWTICH
+      
+      // if a multiple of four pomodoros have been completed 
+      // break timer is 3 times longer
+      if (pomodorosCompleted % 4 === 0) {
+          activateTimerPanel(breakMinutes*3, 0);
+      }else {
+        activateTimerPanel(breakMinutes, 0);
+      }
+      
+      takingBreak = true;
     });
+    $("#keepWorkingButton").click(function(e) {
+       e.preventDefault();
+       // TODO stop alarm sound
+       
+        // hide times up panel //reveal timerPanel behind times up panel
+       $("#timerEndsPanel").css("display", "none");
+      //call method to start timer
+      //TODO SWITCH
+      activateTimerPanel(0, workMinutes);
+             
+        takingBreak = false;
+    });
+    
+    //when quit button is clicked reload the window to clear all settings
+    $("#quitButton").click(function(e) {
+       e.preventDefault();
+       location.reload(); 
+    });
+    
 
-}; // end of activateTimer Panel
 
 //
 // RESIZE EVENT HANDLERS
@@ -238,19 +319,6 @@ function resizeElements() {
    $("#dialContainer").css("height",panelHeight + "px");
     $("#dialBorder").css("height", timerDiameter + "px");
     $("#dialBorder").css("width", timerDiameter + "px");
-    
-    //if the timerup panel is visible
-   // if ($("#timerEndsPanel").css("display") !== "none") {
-        
-        var timerUpPanelHeight = $("#timerEndsPanel").outerHeight(true);
-        var resultsHeight = $("#timerEndsPanel > div").outerHeight(true);
-        var paddingNeeded = (timerUpPanelHeight - resultsHeight)/2;
-        
-        //apply padding to div containing results
-        $("#timerEndsPanel > div").css("padding-top", paddingNeeded + "px");
-        
-    //}
-    
 }
 //call function when page first loads
 resizeElements();
