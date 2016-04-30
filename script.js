@@ -259,11 +259,11 @@ function timesUP() {
     // setup info displayed
     // offer longer break every four pomodoros
     if (takingBreak) {
-        $("#pomodoroResult").html("BREAK IS NOW OVER: GET BACK TO WORK");
+        $("#pomodoroResult").html("BREAK OVER");
     }
     else if(pomodorosCompleted % 4 === 0) {
         $("#pomodoroResult").html("POMODORO " + pomodorosCompleted + " COMPLETE!!"
-                    + "<p>GOOD WORK! YOU CAN NOW TAKE A LONGER BREAK!</P>");
+                    + "<p>GOOD WORK! YOU CAN NOW TAKE A LONG BREAK!</P>");
     }
     else {
         $("#pomodoroResult").html("POMODORO " + pomodorosCompleted + " COMPLETE!!");
