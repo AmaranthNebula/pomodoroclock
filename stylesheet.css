@@ -167,6 +167,16 @@ footer {
     margin: 0.5em;
 }
 
+footer a {
+    text-decoration: none;
+    color: #49a154;
+    font-weight: bold;
+        font-size: 0.9em;
+}
+footer a:hover {
+    color: #7ace88;
+
+}
 
 @media all and (min-width: 600px) {
     header > h1 {
