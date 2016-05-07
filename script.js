@@ -377,6 +377,8 @@ function resizeElements() {
    $("#dialContainer").css("height",panelHeight + "px");
     $("#dialBorder").css("height", timerDiameter + "px");
     $("#dialBorder").css("width", timerDiameter + "px");
+    $("#container").css("height", (timerDiameter-18) + "px");
+    $("#container").css("width", (timerDiameter-12) + "px");
 }
 //call function when page first loads
 resizeElements();
